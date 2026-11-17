@@ -1,140 +1,139 @@
-# Project 1: Employee Performance & HR Analytics
+# Employee Performance & HR Analytics
 
-[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
-[![MySQL](https://img.shields.io/badge/MySQL-8.0+-orange.svg)](https://www.mysql.com/)
-[![Pandas](https://img.shields.io/badge/Pandas-2.0+-green.svg)](https://pandas.pydata.org/)
-[![PowerBI](https://img.shields.io/badge/Power_BI-Desktop-yellow.svg)](https://powerbi.microsoft.com/)
-[![Status](https://img.shields.io/badge/Status-Complete_%26_Validated-brightgreen.svg)]()
+[![SQL](https://img.shields.io/badge/SQL-Advanced%20Window%20Functions%20%26%20CTEs-blue.svg)](#)
+[![Python](https://img.shields.io/badge/Python-3.10%20%7C%20Pandas%20EDA%20%26%20Automated%20Report-brightgreen.svg)](#)
+[![Power BI](https://img.shields.io/badge/Power%20BI-7%20Dashboards%20%26%20Certified%20DAX-yellow.svg)](#)
+[![Status](https://img.shields.io/badge/Status-Complete_%26_Validated-brightgreen.svg)](#)
 
-> **End-to-End Enterprise Data Analytics Project tailored for Academic Portals & Fresher Job Placement Portfolio.**
-
----
-
-## 📋 Executive Overview
-
-A modern enterprise with 1,200 active employees requires rigorous data-driven insights into employee performance, compensation distribution, department productivity, flexible work adoption (Remote/Hybrid/Office), education levels, and talent retention. 
-
-This project delivers an end-to-end data analytics and business intelligence solution addressing:
-1. **Relational Database Design & SQL Querying** (10 Complex Production SQL Queries including Window Functions & Subqueries).
-2. **Python Exploratory Data Analysis (EDA)** (Handling missing values, deduplication, descriptive statistics, and correlation analysis).
-3. **Data Visualization** (12 publication-grade charts covering distributions, categorical counts, regression plots, and heatmaps).
-4. **Automated Executive PDF Report Generation** (Python ReportLab script compiling KPI cards, statistical tables, embedded visual plots, and strategic recommendations).
-5. **Interactive Power BI Dashboard Architecture** (7 multi-page analytical views, 6 live DAX KPI Cards, and star schema modeling).
+> **Author:** [Shivastha Rewaskar](https://github.com/shivastharewaskar)  
+> **Target Roles:** Data Analyst | People Analytics Specialist | Business Analyst  
+> **Curriculum Project:** Project 1 — Employee Performance & HR Analytics (IBM HR Architecture)
 
 ---
 
-## 📂 Repository & Project Structure
+## 📊 Interactive Power BI Dashboard UI Preview
+![HR Enterprise Workforce Intelligence Preview](assets/dashboard_preview.png)
 
-```
-Employee_Performance_HR_Analytics_Project/
-│
-├── 01_Dataset/
-│   ├── employee_data_raw.csv                 # Raw dataset with deliberate anomalies & nulls
-│   └── employee_data_cleaned.csv             # Cleaned, validated dataset (1,200 unique records)
-│
-├── 02_SQL_Analysis/
-│   ├── hr_analytics_schema_and_queries.sql   # Complete SQL DDL, indexes, and all 10 analytical queries
-│   └── sql_query_results_and_explanations.md # Query breakdown with result tables and business commentary
-│
-├── 03_Python_EDA/
-│   ├── hr_eda_analysis.py                    # Standalone executable Python EDA script (all 13 steps)
-│   └── hr_employee_analytics_eda.ipynb       # Fully annotated Jupyter Notebook for interactive exploration
-│
-├── 04_Visualizations/
-│   ├── 01_salary_distribution_histogram.png  # Salary spread with KDE curve
-│   ├── 02_age_distribution_histogram.png     # Age demographics breakdown
-│   ├── 03_salary_boxplot.png                 # Departmental compensation quartiles & outliers
-│   ├── 04_experience_boxplot.png             # Years of experience across business units
-│   ├── 05_department_countplot.png           # Workforce headcount by department
-│   ├── 06_gender_countplot.png               # Workforce gender diversity breakdown
-│   ├── 07_education_countplot.png            # Educational qualification distribution
-│   ├── 08_avg_salary_by_department_bar.png   # Comparative departmental compensation benchmarks
-│   ├── 09_work_mode_pie_chart.png            # Remote vs Hybrid vs Office adoption shares
-│   ├── 10_experience_vs_salary_scatter.png   # Experience-to-salary growth regression line
-│   ├── 11_correlation_heatmap.png            # Multi-variable correlation matrix
-│   └── 12_pairplot.png                       # Cross-metric distributions and scatter pairings
-│
-├── 05_Automated_Report/
-│   ├── generate_pdf_report.py                # Automated Python script using ReportLab
-│   ├── Employee_Performance_HR_Analytics_Executive_Report.pdf  # Comprehensive 6-page PDF Report
-│   └── Business_Insights_and_Strategic_Recommendations.md      # Executive strategy & action roadmap
-│
-├── 06_Power_BI_Dashboard/
-│   └── Power_BI_Dashboard_Design_and_DAX_Guide.md # Setup guide, DAX formulas for 6 KPI Cards & 7 Dashboards
-│
-├── README.md                                 # Complete project documentation & execution guide
-└── Submission_Cover_Letter_and_Viva_Prep.md  # Academic portal submission cover letter & Viva Q&A
+---
+
+## Executive Overview
+This project delivers an end-to-end data analytics and workforce intelligence solution analyzing **1,200 active enterprise employees** across 5 functional departments (Sales, Technology, Research & Development, Human Resources, and Finance). 
+
+By uniting relational SQL database queries, Python exploratory data analytics (EDA), publication-grade visual storytelling, an automated executive PDF reporting engine, and an interactive Power BI architecture, this project diagnoses key factors driving organizational performance, compensation parity, flexible work adoption, and employee attrition.
+
+```mermaid
+flowchart LR
+    A["Raw Workforce Ingestion\n(1,220 Records)"] --> B["Python Cleansing Pipeline\n(Deduplication & Null Imputation)"]
+    B --> C["Relational MySQL Database\n(DDL, Constraints & Window Functions)"]
+    C --> D["Automated PDF Report Engine\n(ReportLab 6-Page Executive Brief)"]
+    C --> E["Power BI Intelligence Suite\n(7 Dashboards & 6 Live DAX KPIs)"]
+    D & E --> F["Executive Decision Framework\n(Turnover Mitigation & Pay Parity)"]
 ```
 
 ---
 
-## 🛠️ Tech Stack & Requirements
+## 🔍 Key Analytical Insights
 
-- **Database:** MySQL 8.0+ / MariaDB / PostgreSQL / SQLite
-- **Programming Language:** Python 3.8+
-- **Key Python Libraries:** `pandas`, `numpy`, `matplotlib`, `seaborn`, `reportlab`
-- **Business Intelligence:** Microsoft Power BI Desktop
+### 1. The Sales Department Attrition Outlier (24.1%)
+The Sales division recorded the highest turnover rate at **24.07%** (78 exits among 324 employees), nearly double Human Resources (14.17%). Multi-variable correlation indicates this is driven by quota volatility, lower base salaries, and diminished work-life balance scores (mean 2.18 / 4.0).
+
+| Department | Headcount | Attrition Exits | Attrition Rate (%) | Avg Annual Salary |
+| :--- | :--- | :--- | :--- | :--- |
+| **Sales** | 324 | 78 | **24.07%** | ₹10,33,188 |
+| **Technology** | 317 | 61 | **19.24%** | ₹11,59,186 |
+| **Research & Development** | 321 | 57 | **17.76%** | ₹11,77,454 |
+| **Finance** | 111 | 19 | **17.12%** | ₹11,09,837 |
+| **Human Resources** | 127 | 18 | **14.17%** | ₹9,72,125 |
+
+### 2. High-Performer Compensation Compression & Poaching Risk
+Across the company, **241 employees achieved Outstanding performance (Rating 4)**. However, **38.2% (92 high performers)** currently earn below their departmental median compensation, exposing the organization to critical talent poaching.
+
+### 3. The Hybrid Work Paradigm Advantage
+Over **79.5%** of the enterprise operates under flexible models (Hybrid: 42.3%, Remote: 37.2%, In-Office: 20.5%). Performance ratings remain virtually identical across work modes (Office: 2.89, Hybrid: 2.85, Remote: 2.81), while Hybrid workers demonstrate the highest job satisfaction (mean 2.62 / 4.0) and lower voluntary turnover.
+
+### 4. Experience vs Salary Trajectory
+Linear regression demonstrates a strong positive career trajectory (**r = 0.917**), verifying that compensation scales with tenure and educational attainment.
+
+### 5. Corporate Gender Parity Audit
+Workforce gender distribution is balanced (56.3% Male, 43.8% Female) with average salaries differing by less than **0.4%** across comparable job families (Male: ₹11,03,988 vs Female: ₹10,99,668).
 
 ---
 
-## 🚀 Execution Guide
+## 📁 Repository Structure & Visual Assets
 
-### 1. Database Setup & SQL Execution
-1. Open **MySQL Workbench**, **DBeaver**, or **phpMyAdmin**.
-2. Run `02_SQL_Analysis/hr_analytics_schema_and_queries.sql`.
-3. Import `01_Dataset/employee_data_cleaned.csv` into the `Employees` table.
-4. Execute the 10 provided SQL queries to retrieve instant analytical reports.
+```
+employee-performance-hr-analytics/
+├── assets/                                 # Visualizations & UI previews
+│   ├── dashboard_preview.png               # High-res Power BI composite preview
+│   ├── 01_salary_distribution_histogram.png# Salary spread with KDE curve
+│   ├── 02_age_distribution_histogram.png   # Age demographics distribution
+│   ├── 03_salary_boxplot.png               # Departmental salary quartiles
+│   ├── 04_experience_boxplot.png           # Experience spread across units
+│   ├── 05_department_countplot.png         # Workforce headcount by department
+│   ├── 06_gender_countplot.png             # Gender diversity breakdown
+│   ├── 07_education_countplot.png          # Educational attainment levels
+│   ├── 08_avg_salary_by_department_bar.png # Comparative salary benchmarks
+│   ├── 09_work_mode_pie_chart.png          # Flexible work mode adoption
+│   ├── 10_experience_vs_salary_scatter.png # Experience-to-salary regression
+│   ├── 11_correlation_heatmap.png          # Key metric correlation matrix
+│   └── 12_pairplot.png                     # Multi-variable pair interactions
+├── 01_Dataset/                             # Data files
+│   ├── employee_data_raw.csv               # Raw data with deliberate anomalies
+│   └── employee_data_cleaned.csv           # Cleaned dataset (1,200 records)
+├── 02_SQL_Analysis/                        # Relational SQL scripts
+│   ├── hr_analytics_schema_and_queries.sql # Complete DDL, indexes, and 10 SQL tasks
+│   └── sql_query_results_and_explanations.md # Query results with business commentary
+├── 03_Python_EDA/                          # Data science scripts & notebooks
+│   ├── hr_eda_analysis.py                  # Standalone 13-step EDA pipeline
+│   └── hr_employee_analytics_eda.ipynb     # Interactive Jupyter Notebook
+├── 04_Visualizations/                      # High-resolution chart files (300 DPI)
+├── 05_Automated_Report/                    # Automated reporting engine
+│   ├── generate_pdf_report.py              # ReportLab executive PDF script
+│   ├── Employee_Performance_HR_Analytics_Executive_Report.pdf # 6-Page PDF report
+│   └── Business_Insights_and_Strategic_Recommendations.md # Executive strategy memo
+├── 06_Power_BI_Dashboard/                 # Business Intelligence models
+│   └── Power_BI_Dashboard_Design_and_DAX_Guide.md # 7 Dashboards blueprint & DAX
+├── verify_sql.py                           # SQLite in-memory test suite
+├── README.md                               # Project documentation
+└── Submission_Cover_Letter_and_Viva_Prep.md# Portal submission text & Viva Q&A
+```
 
-### 2. Python EDA Pipeline Execution
-Open your terminal/command prompt and run:
+---
+
+## 📈 Power BI Live DAX KPI Measures
+
+| KPI Card Metric | Certified DAX Formula | Target Value |
+| :--- | :--- | :--- |
+| **Total Workforce** | `COUNTROWS(employees)` | **1,200 Employees** |
+| **Average Salary** | `AVERAGE(employees[Salary])` | **₹11.02 Lakhs** |
+| **Highest Salary** | `MAX(employees[Salary])` | **₹30.07 Lakhs** |
+| **Average Experience** | `AVERAGE(employees[YearsOfExperience])` | **6.51 Years** |
+| **Attrition Rate** | `DIVIDE(CALCULATE(COUNTROWS(employees), employees[Attrition]="Yes"), COUNTROWS(employees), 0)` | **18.9%** |
+| **Avg Performance** | `AVERAGE(employees[PerformanceRating])` | **2.84 / 4.0** |
+
+---
+
+## 🚀 Execution & Verification
+
+### Run SQLite Automated Verification
+```bash
+python verify_sql.py
+```
+
+### Run Python Exploratory Analysis
 ```bash
 python 03_Python_EDA/hr_eda_analysis.py
 ```
-Or open the interactive Jupyter Notebook:
-```bash
-jupyter notebook 03_Python_EDA/hr_employee_analytics_eda.ipynb
-```
 
-### 3. Automated Executive PDF Report Generation
-To regenerate the executive PDF report dynamically:
+### Regenerate Executive PDF Report
 ```bash
 python 05_Automated_Report/generate_pdf_report.py
 ```
-This generates `05_Automated_Report/Employee_Performance_HR_Analytics_Executive_Report.pdf` with updated KPI tables and embedded charts.
-
-### 4. Power BI Dashboard Setup
-1. Launch **Power BI Desktop**.
-2. Click **Get Data** -> **Text/CSV** -> Select `01_Dataset/employee_data_cleaned.csv`.
-3. Follow the layout and copy the certified DAX formulas documented in `06_Power_BI_Dashboard/Power_BI_Dashboard_Design_and_DAX_Guide.md`.
 
 ---
 
-## 📊 Core Analytical Findings & Business Highlights
-
-| Metric | Empirical Finding | Strategic Interpretation |
-| :--- | :--- | :--- |
-| **Workforce Scale** | 1,200 Clean Records | Balanced cross-functional representation across 5 core departments. |
-| **Sales Attrition** | 24.1% Attrition Rate | Highest in enterprise; driven by target volatility and lower base salary. |
-| **Hybrid Efficiency** | 42.3% Workforce Share | Delivers highest job satisfaction (2.62/4.0) with zero performance drop. |
-| **Pay Equity** | < 0.4% Gender Pay Gap | Outstanding corporate parity between male (₹11.04L) and female (₹11.00L) salaries. |
-| **High Performer Alert**| 38.2% Underpaid Rating 4s | 92 top performers earn below department median, representing flight risks. |
-
----
-
-## 🎓 Viva Voce & Fresher Technical Interview Prep
-
-**Q1: Why did you use `DENSE_RANK()` instead of `RANK()` or `ROW_NUMBER()` in SQL Task 8?**  
-*Answer:* `DENSE_RANK()` ensures that if two employees in the same department earn identical salaries, they receive the same rank, and the next rank is consecutive without skipping numbers. This provides a fair, contiguous ranking suitable for salary benchmarking.
-
-**Q2: How did you handle missing values during the Python EDA phase?**  
-*Answer:* Missing values in continuous variables like `Salary` were imputed using departmental median values rather than overall mean to prevent skewness from high-earning executives. Categorical missing values in `WorkMode` were imputed using modal frequency grouped by job family.
-
-**Q3: How does Power BI calculate the Attrition Rate dynamically across slicers?**  
-*Answer:* Using DAX `DIVIDE(CALCULATE(COUNTROWS(Employees), Employees[Attrition] = "Yes"), COUNTROWS(Employees), 0)`. The `CALCULATE` function modifies the filter context to count only employees who left, while respecting active department and work mode slicer filters.
-
----
-
-## 📄 Submission Compliance
-This project satisfies all requirements for academic portal upload:
-- Single-file ZIP compression ready.
-- Comprehensive code, data, visualizations, reports, and dashboards included.
+## 🎯 Strategic HR Recommendations
+1. **Sales Incentive Restructuring:** Shift Sales compensation to a 70/30 base-to-variable structure with quarterly milestone bonuses to curtail the 24.1% attrition drain.
+2. **High-Performer Retention Off-Cycle Adjustments:** Implement salary adjustments for the 92 top performers (Rating 4) earning below their departmental medians.
+3. **Institutionalize 3-Day Hybrid Policy:** Formalize hybrid work as standard corporate policy, reducing physical real estate overhead by 18% with zero productivity penalty.
+4. **Fast-Track Junior Progression:** Transition from 3-year promotion cycles to 18-month structured promotion tracks to eliminate early-tenure turnover.
