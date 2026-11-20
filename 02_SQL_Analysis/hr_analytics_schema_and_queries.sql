@@ -1,75 +1,71 @@
--- =====================================================================
--- PROJECT 1: EMPLOYEE PERFORMANCE & HR ANALYTICS
--- Database Management System: MySQL / MariaDB (Compatible with SQLite / PostgreSQL)
--- Description: End-to-End SQL Schema, Data Ingestion, and 10 Core Analytical Tasks
--- =====================================================================
+/* 
+ * =====================================================================
+ * Student Name: Shivastha Rewaskar
+ * Project: Employee Performance & HR Analytics
+ * GitHub Repository: https://github.com/shivastharewaskar/employee-performance-hr-analytics
+ * Database Engine: MySQL 8.0+
+ * Description: Relational Schema DDL, Data Ingestion, and 10 SQL Tasks
+ * =====================================================================
+ */
 
--- Step 1: Database Initialization
+-- 1. Database Creation
 CREATE DATABASE IF NOT EXISTS HR_Analytics_DB;
 USE HR_Analytics_DB;
 
--- Step 2: Table Creation (DDL with Constraints)
-DROP TABLE IF EXISTS Employees;
+-- 2. Drop table if it already exists to allow re-running script cleanly
+DROP TABLE IF EXISTS employees;
 
-CREATE TABLE Employees (
+-- 3. Table Schema with proper datatypes and constraints
+CREATE TABLE employees (
     EmployeeID VARCHAR(10) PRIMARY KEY,
-    Age INT NOT NULL CHECK (Age >= 18 AND Age <= 70),
-    Gender VARCHAR(10) NOT NULL CHECK (Gender IN ('Male', 'Female', 'Other')),
+    Age INT NOT NULL,
+    Gender VARCHAR(10) NOT NULL,
     Department VARCHAR(50) NOT NULL,
     JobRole VARCHAR(50) NOT NULL,
     Education VARCHAR(50) NOT NULL,
-    YearsOfExperience INT NOT NULL CHECK (YearsOfExperience >= 0),
-    YearsAtCompany INT NOT NULL CHECK (YearsAtCompany >= 0),
-    Salary DECIMAL(12, 2) NOT NULL CHECK (Salary > 0),
-    WorkMode VARCHAR(20) NOT NULL CHECK (WorkMode IN ('Remote', 'Hybrid', 'Office')),
-    PerformanceRating INT NOT NULL CHECK (PerformanceRating BETWEEN 1 AND 4),
-    JobSatisfaction INT NOT NULL CHECK (JobSatisfaction BETWEEN 1 AND 4),
-    WorkLifeBalance INT NOT NULL CHECK (WorkLifeBalance BETWEEN 1 AND 4),
-    Attrition VARCHAR(5) NOT NULL CHECK (Attrition IN ('Yes', 'No'))
+    YearsOfExperience INT NOT NULL,
+    YearsAtCompany INT NOT NULL,
+    Salary DECIMAL(12, 2) NOT NULL,
+    WorkMode VARCHAR(20) NOT NULL,
+    PerformanceRating INT NOT NULL,
+    JobSatisfaction INT NOT NULL,
+    WorkLifeBalance INT NOT NULL,
+    Attrition VARCHAR(5) NOT NULL
 );
 
--- Note: Data can be populated directly via MySQL Workbench Import Wizard
--- or LOAD DATA LOCAL INFILE 'employee_data_cleaned.csv' INTO TABLE Employees...
-
--- Step 3: Performance Optimization (Indexes)
-CREATE INDEX idx_emp_dept ON Employees(Department);
-CREATE INDEX idx_emp_salary ON Employees(Salary);
-CREATE INDEX idx_emp_workmode ON Employees(WorkMode);
-CREATE INDEX idx_emp_attrition ON Employees(Attrition);
+-- Adding indexes on frequently filtered and joined columns for performance
+CREATE INDEX idx_emp_dept ON employees(Department);
+CREATE INDEX idx_emp_salary ON employees(Salary);
+CREATE INDEX idx_emp_workmode ON employees(WorkMode);
+CREATE INDEX idx_emp_attrition ON employees(Attrition);
 
 -- =====================================================================
--- SQL TASKS (10 CORE PROBLEM STATEMENTS)
+-- SQL TASKS (10 Core Queries)
 -- =====================================================================
 
--- ---------------------------------------------------------------------
--- Task 1: Retrieve the total number of employees in each department.
--- Business Context: Essential for workforce capacity planning and resource allocation.
--- ---------------------------------------------------------------------
+-- Task 1: Retrieve the total number of employees in each department
+-- Logic: Group by department, count total rows, and calculate % share of total workforce
 SELECT 
     Department, 
     COUNT(*) AS TotalEmployees,
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Employees), 2) AS WorkforcePercentage
-FROM Employees
+    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees), 2) AS WorkforcePercentage
+FROM employees
 GROUP BY Department
 ORDER BY TotalEmployees DESC;
 
--- ---------------------------------------------------------------------
--- Task 2: Find the average salary department-wise.
--- Business Context: Establishes baseline compensation cost per business division.
--- ---------------------------------------------------------------------
+-- Task 2: Find the average salary department-wise
+-- Logic: Aggregate AVG(Salary), MIN(Salary), and MAX(Salary) per department
 SELECT 
     Department, 
     ROUND(AVG(Salary), 2) AS AverageSalary,
     ROUND(MIN(Salary), 2) AS MinSalary,
     ROUND(MAX(Salary), 2) AS MaxSalary
-FROM Employees
+FROM employees
 GROUP BY Department
 ORDER BY AverageSalary DESC;
 
--- ---------------------------------------------------------------------
--- Task 3: Identify the top 10 highest-paid employees.
--- Business Context: Identifies top executive and specialized talent investments.
--- ---------------------------------------------------------------------
+-- Task 3: Identify the top 10 highest-paid employees
+-- Logic: Order by salary descending and limit output to top 10 records
 SELECT 
     EmployeeID, 
     Department, 
@@ -77,26 +73,22 @@ SELECT
     Education, 
     YearsOfExperience, 
     Salary
-FROM Employees
+FROM employees
 ORDER BY Salary DESC
 LIMIT 10;
 
--- ---------------------------------------------------------------------
--- Task 4: Calculate the average years of experience by department.
--- Business Context: Measures talent seniority and institutional knowledge density.
--- ---------------------------------------------------------------------
+-- Task 4: Calculate the average years of experience by department
+-- Logic: Average the YearsOfExperience and YearsAtCompany per department
 SELECT 
     Department, 
     ROUND(AVG(YearsOfExperience), 2) AS AvgExperienceYears,
     ROUND(AVG(YearsAtCompany), 2) AS AvgTenureAtCompany
-FROM Employees
+FROM employees
 GROUP BY Department
 ORDER BY AvgExperienceYears DESC;
 
--- ---------------------------------------------------------------------
--- Task 5: Find employees with the highest performance rating.
--- Business Context: Talent review pool for annual promotion and merit awards.
--- ---------------------------------------------------------------------
+-- Task 5: Find employees with the highest performance rating (Rating = 4)
+-- Logic: Use subquery to dynamically find the maximum rating value in the table
 SELECT 
     EmployeeID, 
     Department, 
@@ -104,99 +96,75 @@ SELECT
     PerformanceRating, 
     Salary, 
     WorkMode
-FROM Employees
-WHERE PerformanceRating = (SELECT MAX(PerformanceRating) FROM Employees)
+FROM employees
+WHERE PerformanceRating = (SELECT MAX(PerformanceRating) FROM employees)
 ORDER BY Salary DESC;
 
--- ---------------------------------------------------------------------
--- Task 6: Count employees based on work mode (Remote, Hybrid, Office).
--- Business Context: Determines infrastructure needs and remote policy adoption.
--- ---------------------------------------------------------------------
+-- Task 6: Count employees based on work mode (Remote, Hybrid, Office)
+-- Logic: Group by work mode and compute headcount and percentage
 SELECT 
     WorkMode, 
     COUNT(*) AS EmployeeCount,
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Employees), 2) AS AdoptionPercentage
-FROM Employees
+    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees), 2) AS AdoptionPercentage
+FROM employees
 GROUP BY WorkMode
 ORDER BY EmployeeCount DESC;
 
--- ---------------------------------------------------------------------
--- Task 7: Identify departments with the highest employee attrition.
--- Business Context: Pinpoints organizational friction and high-turnover centers.
--- ---------------------------------------------------------------------
+-- Task 7: Identify departments with the highest employee attrition
+-- Logic: Use conditional aggregation (SUM CASE) to count 'Yes' attrition per department
 SELECT 
     Department, 
     COUNT(*) AS TotalEmployees,
     SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) AS AttritionExits,
     ROUND(SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS AttritionRatePercent
-FROM Employees
+FROM employees
 GROUP BY Department
 ORDER BY AttritionRatePercent DESC;
 
--- ---------------------------------------------------------------------
--- Task 8: Rank employees based on salary within each department.
--- Business Context: Advanced window function used for internal equity comparisons.
--- ---------------------------------------------------------------------
+-- Task 8: Rank employees based on salary within each department
+-- Logic: Window function DENSE_RANK() partitioned by department and ordered by salary desc
 SELECT 
     EmployeeID, 
     Department, 
     JobRole, 
     Salary, 
     DENSE_RANK() OVER (PARTITION BY Department ORDER BY Salary DESC) AS SalaryRankInDept
-FROM Employees
+FROM employees
 ORDER BY Department, SalaryRankInDept;
 
--- ---------------------------------------------------------------------
--- Task 9: Find employees earning above the company average salary.
--- Business Context: Subquery analysis identifying premium compensation earners.
--- ---------------------------------------------------------------------
+-- Task 9: Find employees earning above the company average salary
+-- Logic: Subquery in WHERE clause comparing each employee's salary to company AVG(Salary)
 SELECT 
     EmployeeID, 
     Department, 
     JobRole, 
     Salary,
-    ROUND(Salary - (SELECT AVG(Salary) FROM Employees), 2) AS SalaryAboveAverage
-FROM Employees
-WHERE Salary > (SELECT AVG(Salary) FROM Employees)
+    ROUND(Salary - (SELECT AVG(Salary) FROM employees), 2) AS SalaryAboveAverage
+FROM employees
+WHERE Salary > (SELECT AVG(Salary) FROM employees)
 ORDER BY Salary DESC;
 
--- ---------------------------------------------------------------------
--- Task 10: Calculate gender-wise employee distribution.
--- Business Context: Monitors corporate Diversity, Equity, and Inclusion (DEI) metrics.
--- ---------------------------------------------------------------------
+-- Task 10: Calculate gender-wise employee distribution
+-- Logic: Group by Gender to inspect headcount, percentage, and average salary comparison
 SELECT 
     Gender, 
     COUNT(*) AS EmployeeCount,
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Employees), 2) AS DistributionPercentage,
+    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees), 2) AS DistributionPercentage,
     ROUND(AVG(Salary), 2) AS AvgSalaryByGender
-FROM Employees
+FROM employees
 GROUP BY Gender
 ORDER BY EmployeeCount DESC;
 
 -- =====================================================================
--- BONUS ADVANCED SQL: VIEWS AND STORED PROCEDURES
+-- Helpful View for Power BI / Reporting
 -- =====================================================================
-
--- Analytical View for Power BI Direct Query Connection
-CREATE OR REPLACE VIEW vw_HR_Department_KPIs AS
+CREATE OR REPLACE VIEW vw_department_summary AS
 SELECT 
     Department,
     COUNT(*) AS TotalHeadcount,
-    ROUND(AVG(Salary), 2) AS DeptAvgSalary,
-    ROUND(AVG(YearsOfExperience), 2) AS DeptAvgExperience,
-    ROUND(SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS DeptAttritionRate,
-    ROUND(AVG(PerformanceRating), 2) AS DeptAvgPerformance
-FROM Employees
+    ROUND(AVG(Salary), 2) AS AvgSalary,
+    ROUND(AVG(YearsOfExperience), 2) AS AvgExperience,
+    ROUND(SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS AttritionRate,
+    ROUND(AVG(PerformanceRating), 2) AS AvgPerformance
+FROM employees
 GROUP BY Department;
-
--- Stored Procedure: Departmental Talent Filter
-DELIMITER //
-CREATE PROCEDURE sp_GetDepartmentTalent(IN targetDept VARCHAR(50))
-BEGIN
-    SELECT 
-        EmployeeID, JobRole, Education, YearsOfExperience, Salary, WorkMode, PerformanceRating, Attrition
-    FROM Employees
-    WHERE Department = targetDept
-    ORDER BY PerformanceRating DESC, Salary DESC;
-END //
-DELIMITER ;

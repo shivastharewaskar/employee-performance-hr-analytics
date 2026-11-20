@@ -1,21 +1,23 @@
-# SQL Query Implementation & Analytical Findings
+# SQL Query Solutions & Execution Results
 
-## Project 1: Employee Performance & HR Analytics
-**Author:** Candidate (Fresher Data Analyst Submission)  
-**Database Engine:** MySQL 8.0+ / MariaDB / PostgreSQL / SQLite Compatible  
+**Student Name:** Shivastha Rewaskar  
+**GitHub Repository:** [https://github.com/shivastharewaskar/employee-performance-hr-analytics](https://github.com/shivastharewaskar/employee-performance-hr-analytics)  
+**Project:** Employee Performance & HR Analytics  
+**Database:** MySQL 8.0+  
 
 ---
 
-### Task 1: Total Number of Employees in Each Department
+### Task 1: Retrieve the total number of employees in each department
 ```sql
 SELECT 
     Department, 
     COUNT(*) AS TotalEmployees,
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Employees), 2) AS WorkforcePercentage
-FROM Employees
+    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees), 2) AS WorkforcePercentage
+FROM employees
 GROUP BY Department
 ORDER BY TotalEmployees DESC;
 ```
+**Output:**
 | Department | TotalEmployees | WorkforcePercentage |
 | :--- | :--- | :--- |
 | **Sales** | 324 | 27.00% |
@@ -24,21 +26,22 @@ ORDER BY TotalEmployees DESC;
 | **Human Resources** | 127 | 10.58% |
 | **Finance** | 111 | 9.25% |
 
-**Business Insight:** The company's core operations are concentrated in Sales, R&D, and Technology, collectively making up over 80% of human resources.
+*My Observation:* Sales, R&D, and Technology make up about 80% of our total workforce. HR and Finance are smaller administrative units.
 
 ---
 
-### Task 2: Average Salary Department-Wise
+### Task 2: Find the average salary department-wise
 ```sql
 SELECT 
     Department, 
     ROUND(AVG(Salary), 2) AS AverageSalary,
     ROUND(MIN(Salary), 2) AS MinSalary,
     ROUND(MAX(Salary), 2) AS MaxSalary
-FROM Employees
+FROM employees
 GROUP BY Department
 ORDER BY AverageSalary DESC;
 ```
+**Output:**
 | Department | AverageSalary (₹) | MinSalary (₹) | MaxSalary (₹) |
 | :--- | :--- | :--- | :--- |
 | **Research & Development** | ₹11,77,454.83 | ₹4,20,000 | ₹29,80,000 |
@@ -47,42 +50,29 @@ ORDER BY AverageSalary DESC;
 | **Sales** | ₹10,33,188.27 | ₹3,80,000 | ₹29,27,000 |
 | **Human Resources** | ₹9,72,125.98 | ₹3,90,000 | ₹29,32,000 |
 
-**Business Insight:** Research & Development and Technology command the highest salary premiums due to specialized technical and scientific expertise.
+*My Observation:* Technical departments like R&D and Technology have the highest average pay due to specialized roles like Scientists and Cloud Architects.
 
 ---
 
-### Task 3: Top 10 Highest-Paid Employees
+### Task 3: Identify the top 10 highest-paid employees
 ```sql
 SELECT 
     EmployeeID, Department, JobRole, Education, YearsOfExperience, Salary
-FROM Employees
+FROM employees
 ORDER BY Salary DESC
 LIMIT 10;
 ```
-| EmployeeID | Department | JobRole | Education | Experience | Salary (₹) |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| EMP0142 | Technology | Cloud Architect | Doctorate | 30 Yrs | ₹30,07,000 |
-| EMP0325 | Technology | Data Analyst | Doctorate | 34 Yrs | ₹29,72,000 |
-| EMP1015 | Technology | DevOps Specialist | Doctorate | 33 Yrs | ₹29,51,000 |
-| EMP0576 | Human Resources | Talent Lead | Doctorate | 35 Yrs | ₹29,32,000 |
-| EMP0565 | Sales | Sales Executive | Doctorate | 34 Yrs | ₹29,27,000 |
-| EMP0089 | R & D | R&D Director | Master's | 32 Yrs | ₹29,18,000 |
-| EMP0441 | Technology | Software Engineer | Doctorate | 31 Yrs | ₹29,12,000 |
-| EMP0722 | Technology | Cloud Architect | Master's | 33 Yrs | ₹28,95,000 |
-| EMP0612 | Finance | Finance Manager | Master's | 32 Yrs | ₹28,84,000 |
-| EMP0934 | R & D | Research Scientist | Doctorate | 30 Yrs | ₹28,76,000 |
-
-**Business Insight:** Top compensation correlates heavily with 30+ years of experience and advanced degrees (Doctorate / Master's).
+*My Observation:* The top 10 highest paid employees all have 30+ years of experience and advanced degrees (Master's or Doctorate).
 
 ---
 
-### Task 4: Average Years of Experience by Department
+### Task 4: Calculate the average years of experience by department
 ```sql
 SELECT 
     Department, 
     ROUND(AVG(YearsOfExperience), 2) AS AvgExperienceYears,
     ROUND(AVG(YearsAtCompany), 2) AS AvgTenureAtCompany
-FROM Employees
+FROM employees
 GROUP BY Department
 ORDER BY AvgExperienceYears DESC;
 ```
@@ -96,26 +86,25 @@ ORDER BY AvgExperienceYears DESC;
 
 ---
 
-### Task 5: Employees with Highest Performance Rating (Rating = 4)
+### Task 5: Find employees with the highest performance rating (Rating = 4)
 ```sql
 SELECT 
     EmployeeID, Department, JobRole, PerformanceRating, Salary, WorkMode
-FROM Employees
-WHERE PerformanceRating = (SELECT MAX(PerformanceRating) FROM Employees)
+FROM employees
+WHERE PerformanceRating = (SELECT MAX(PerformanceRating) FROM employees)
 ORDER BY Salary DESC;
 ```
-*Total High Performers:* **241 Employees (20.1% of workforce)**.  
-*Insight:* Performance excellence is uniformly distributed across remote, hybrid, and office workers, proving flexible work modes do not diminish output quality.
+*My Observation:* 241 employees achieved a rating of 4 (Outstanding). They are evenly distributed across Remote, Hybrid, and Office work modes.
 
 ---
 
-### Task 6: Employee Count Based on Work Mode
+### Task 6: Count employees based on work mode (Remote, Hybrid, Office)
 ```sql
 SELECT 
     WorkMode, 
     COUNT(*) AS EmployeeCount,
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Employees), 2) AS Percentage
-FROM Employees
+    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees), 2) AS AdoptionPercentage
+FROM employees
 GROUP BY WorkMode
 ORDER BY EmployeeCount DESC;
 ```
@@ -125,22 +114,22 @@ ORDER BY EmployeeCount DESC;
 | **Remote** | 446 | 37.17% |
 | **Office** | 246 | 20.50% |
 
-**Business Insight:** Over 79.5% of staff operate outside traditional fixed office arrangements.
+*My Observation:* Over 79% of employees work either Hybrid or Remote, showing flexible work is the dominant preference.
 
 ---
 
-### Task 7: Departments with Highest Employee Attrition
+### Task 7: Identify departments with the highest employee attrition
 ```sql
 SELECT 
     Department, 
     COUNT(*) AS TotalEmployees,
-    SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) AS AttritionCount,
+    SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) AS AttritionExits,
     ROUND(SUM(CASE WHEN Attrition = 'Yes' THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2) AS AttritionRatePercent
-FROM Employees
+FROM employees
 GROUP BY Department
 ORDER BY AttritionRatePercent DESC;
 ```
-| Department | TotalEmployees | AttritionCount | AttritionRatePercent |
+| Department | TotalEmployees | AttritionExits | AttritionRatePercent |
 | :--- | :--- | :--- | :--- |
 | **Sales** | 324 | 78 | **24.07%** |
 | **Technology** | 317 | 61 | **19.24%** |
@@ -148,49 +137,48 @@ ORDER BY AttritionRatePercent DESC;
 | **Finance** | 111 | 19 | **17.12%** |
 | **Human Resources** | 127 | 18 | **14.17%** |
 
-**Business Insight:** Sales experiences almost double the attrition rate of HR, primarily driven by targets and variable compensation stress.
+*My Observation:* Sales has the highest attrition rate at 24.07%, while HR has the lowest at 14.17%.
 
 ---
 
-### Task 8: Rank Employees by Salary Within Each Department
+### Task 8: Rank employees based on salary within each department
 ```sql
 SELECT 
     EmployeeID, Department, JobRole, Salary, 
     DENSE_RANK() OVER (PARTITION BY Department ORDER BY Salary DESC) AS SalaryRankInDept
-FROM Employees
+FROM employees
 ORDER BY Department, SalaryRankInDept;
 ```
-*Key Technique:* Utilizes `DENSE_RANK() OVER (PARTITION BY Department ORDER BY Salary DESC)` window function to benchmark employees against department peers without skipping rank values.
+*My Observation:* I used `DENSE_RANK()` so that ties get the same rank and no subsequent numbers are skipped.
 
 ---
 
-### Task 9: Employees Earning Above Company Average Salary
+### Task 9: Find employees earning above the company average salary
 ```sql
 SELECT 
     EmployeeID, Department, JobRole, Salary,
-    ROUND(Salary - (SELECT AVG(Salary) FROM Employees), 2) AS SalaryAboveAverage
-FROM Employees
-WHERE Salary > (SELECT AVG(Salary) FROM Employees)
+    ROUND(Salary - (SELECT AVG(Salary) FROM employees), 2) AS SalaryAboveAverage
+FROM employees
+WHERE Salary > (SELECT AVG(Salary) FROM employees)
 ORDER BY Salary DESC;
 ```
-*Company Average Salary:* **₹11,14,350.00**  
-*Count of Qualifying Employees:* **503 (41.9% of company)**  
+*My Observation:* The average salary across the company is ₹11,02,098. Exactly 503 employees (41.9%) earn above this benchmark.
 
 ---
 
-### Task 10: Gender-Wise Employee Distribution
+### Task 10: Calculate gender-wise employee distribution
 ```sql
 SELECT 
     Gender, 
     COUNT(*) AS EmployeeCount,
-    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM Employees), 2) AS Percentage,
+    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM employees), 2) AS Percentage,
     ROUND(AVG(Salary), 2) AS AvgSalaryByGender
-FROM Employees
+FROM employees
 GROUP BY Gender;
 ```
 | Gender | EmployeeCount | Percentage | AvgSalary (₹) |
 | :--- | :--- | :--- | :--- |
-| **Male** | 675 | 56.25% | ₹11,18,420 |
-| **Female** | 525 | 43.75% | ₹11,09,120 |
+| **Male** | 675 | 56.25% | ₹11,03,988 |
+| **Female** | 525 | 43.75% | ₹10,99,668 |
 
-**Business Insight:** Gender pay gap is negligible (<0.8%), demonstrating equitable enterprise compensation practices.
+*My Observation:* The gender pay gap is negligible (<0.4%), showing fair compensation parity between male and female employees.
